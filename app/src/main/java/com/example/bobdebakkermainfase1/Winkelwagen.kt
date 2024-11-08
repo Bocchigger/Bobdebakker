@@ -2,6 +2,7 @@ package com.example.bobdebakkermainfase1
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +20,25 @@ class Winkelwagen : AppCompatActivity() {
             insets
         }
 
-        var itemCount = findViewById<TextView>(R.id.itemCount)
-        findViewById<Button>(R.id.plusBtn).setOnClickListener {
-            itemCount.text = (itemCount.text.toString().toInt() + 1).toString()
+        val itemCount = findViewById<TextView>(R.id.itemCount)
+        itemCount.text = "1"
+        //findViewById<Button>(R.id.plusBtn).setOnClickListener {
+            //
+        //
+        //}
+
+        findViewById<ImageButton>(R.id.plusBtn).setOnClickListener {
+            ChangeItemCount(+1)
         }
+
+        findViewById<ImageButton>(R.id.minBtn).setOnClickListener {
+            ChangeItemCount(-1)
+        }
+
+    }
+
+    fun ChangeItemCount(count: Int) {
+        val itemCount = findViewById<TextView>(R.id.itemCount)
+        itemCount.text = (itemCount.text.toString().toInt() + count).toString()
     }
 }

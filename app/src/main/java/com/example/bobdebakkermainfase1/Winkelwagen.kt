@@ -38,7 +38,33 @@ class Winkelwagen : AppCompatActivity() {
     }
 
     fun ChangeItemCount(count: Int) {
+        // Get Id's
         val itemCount = findViewById<TextView>(R.id.itemCount)
-        itemCount.text = (itemCount.text.toString().toInt() + count).toString()
+        val itemCost = findViewById<TextView>(R.id.itemCost)
+
+        // Set Count
+        val count = itemCount.text.toString().toInt() + count
+
+        // Check range
+        if (count < 1 || count > 50) return
+        // Else go further
+        itemCount.text = count.toString()
+
+        // Set Cost
+        val cost = count * 6.5
+
+        // Setup Cost Display
+        var costString = ""
+        for (token in cost.toString()) {
+            if (token.toString() == ".") {
+                costString += ","
+            } else {
+                costString += token.toString()
+            }
+        }
+        costString = "€ " + costString + "0"
+
+        // Set Cost Display
+        itemCost.text = costString
     }
 }

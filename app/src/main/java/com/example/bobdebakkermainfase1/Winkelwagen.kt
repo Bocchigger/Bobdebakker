@@ -22,10 +22,6 @@ class Winkelwagen : AppCompatActivity() {
 
         val itemCount = findViewById<TextView>(R.id.itemCount)
         itemCount.text = "1"
-        //findViewById<Button>(R.id.plusBtn).setOnClickListener {
-            //
-        //
-        //}
 
         findViewById<ImageButton>(R.id.plusBtn).setOnClickListener {
             ChangeItemCount(+1)
@@ -33,8 +29,9 @@ class Winkelwagen : AppCompatActivity() {
 
         findViewById<ImageButton>(R.id.minBtn).setOnClickListener {
             ChangeItemCount(-1)
+            println()
+            CreateItem("Broodje Kippendij", "Bobje jungle (Bobjes)", findViewById<ImageButton>(R.id.minBtn).background, "€ 6,50")
         }
-
     }
 
     fun ChangeItemCount(count: Int) {

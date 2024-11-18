@@ -10,6 +10,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class Winkelwagen : AppCompatActivity() {
+    private var items : HashMap<String, String> = HashMap<String, String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,21 +22,36 @@ class Winkelwagen : AppCompatActivity() {
             insets
         }
 
+        WinkelwagenCode()
+
+    }
+
+    fun WinkelwagenCode() {
+
+
+        /*items["ItemCount"] = "12"
+
+        val itemCount : Int = items["ItemCount"]!!.toInt()
+        for (i in 1..itemCount) {
+            println(i)
+        }*/
+        itemCountCode()
+    }
+
+    private fun itemCountCode() {
         val itemCount = findViewById<TextView>(R.id.itemCount)
         itemCount.text = "1"
 
         findViewById<ImageButton>(R.id.plusBtn).setOnClickListener {
-            ChangeItemCount(+1)
+            changeItemCount(+1)
         }
 
         findViewById<ImageButton>(R.id.minBtn).setOnClickListener {
-            ChangeItemCount(-1)
+            changeItemCount(-1)
             println()
-            CreateItem("Broodje Kippendij", "Bobje jungle (Bobjes)", findViewById<ImageButton>(R.id.minBtn).background, "€ 6,50")
         }
     }
-
-    fun ChangeItemCount(count: Int) {
+    private fun changeItemCount(count: Int) {
         // Get Id's
         val itemCount = findViewById<TextView>(R.id.itemCount)
         val itemCost = findViewById<TextView>(R.id.itemCost)

@@ -1,16 +1,39 @@
 package com.example.bobdebakkermainfase1
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class Winkelwagen : AppCompatActivity() {
-    private var items : HashMap<String, String> = HashMap<String, String>()
+    private var items : MutableMap<String, MutableMap<String, Any>> = mutableMapOf(
+        "item1" to mutableMapOf (
+            "id" to 1,
+            "name" to "Broodje Kippendij",
+            "description" to "Bobje® jungle (Bobjes)",
+            "img" to "",
+            "cost" to "€ 6,50"
+        ),
+        "item2" to mutableMapOf (
+            "id" to 2,
+            "name" to "Broodjeeeeee Gezondo",
+            "description" to "Bobje® jungle (Bobjes)",
+            "img" to "",
+            "cost" to "€ 5,95"
+        )
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +45,15 @@ class Winkelwagen : AppCompatActivity() {
             insets
         }
 
-        WinkelwagenCode()
+
+
+
+
+        winkelwagenCode()
 
     }
 
-    fun WinkelwagenCode() {
+    fun winkelwagenCode() {
 
 
         /*items["ItemCount"] = "12"
@@ -35,7 +62,22 @@ class Winkelwagen : AppCompatActivity() {
         for (i in 1..itemCount) {
             println(i)
         }*/
-        itemCountCode()
+
+        //itemCountCode()
+
+        items["item1"]?.set("img", ContextCompat.getDrawable(this, R.drawable.broodjekippendij) as Drawable)
+        items["item2"]?.set("img", ContextCompat.getDrawable(this, R.drawable.broodjegezond) as Drawable)
+
+        val itemTitle = findViewById<TextView>(R.id.itemTitle)
+        val itemDescription = findViewById<TextView>(R.id.itemDescription)
+        val itemImage = findViewById<ImageView>(R.id.itemImage)
+        val itemCost = findViewById<TextView>(R.id.itemCost)
+
+        println(items["item2"]?.get("name"))
+        itemTitle.text = items["item2"]?.get("name").toString()
+        itemDescription.text = items["item2"]?.get("description").toString()
+        itemImage.setImageDrawable(items["item2"]?.get("img") as Drawable)
+        itemCost.text = items["item2"]?.get("cost").toString()
     }
 
     private fun itemCountCode() {

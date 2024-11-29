@@ -16,6 +16,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class Winkelwagen : AppCompatActivity() {
     private var items : MutableMap<String, MutableMap<String, Any>> = mutableMapOf(
@@ -23,14 +25,14 @@ class Winkelwagen : AppCompatActivity() {
             "id" to 1,
             "name" to "Broodje Kippendij",
             "description" to "Bobje® jungle (Bobjes)",
-            "img" to "",
+            "img" to R.drawable.broodjekippendij,
             "cost" to "€ 6,50"
         ),
         "item2" to mutableMapOf (
             "id" to 2,
             "name" to "Broodjeeeeee Gezondo",
             "description" to "Bobje® jungle (Bobjes)",
-            "img" to "",
+            "img" to R.drawable.broodjegezond,
             "cost" to "€ 5,95"
         )
     )
@@ -45,11 +47,34 @@ class Winkelwagen : AppCompatActivity() {
             insets
         }
 
+        // getting the recyclerview by its id
+        val recyclerview = findViewById<RecyclerView>(R.id.itemsList)
+
+        // this creates a vertical layout Manager
+        recyclerview.layoutManager = LinearLayoutManager(this)
+
+        // ArrayList of class ItemsViewModel
+        val data = ArrayList<ItemsViewModel>()
+
+        // This loop will create 20 Views containing
+        // the image with the count of view
+        for (i in 1..items.count()) {
+            data.add(ItemsViewModel(
+                items["item$i"]?.get("img").toString().toInt(),
+                items["item$i"]?.get("name").toString(),
+                items["item$i"]?.get("description").toString()
+            ))
+        }
+
+        // This will pass the ArrayList to our Adapter
+        val adapter = CustomAdapter(data)
+
+        // Setting the Adapter with the recyclerview
+        recyclerview.adapter = adapter
 
 
 
-
-        winkelwagenCode()
+        //winkelwagenCode()
 
     }
 
@@ -65,19 +90,7 @@ class Winkelwagen : AppCompatActivity() {
 
         //itemCountCode()
 
-        items["item1"]?.set("img", ContextCompat.getDrawable(this, R.drawable.broodjekippendij) as Drawable)
-        items["item2"]?.set("img", ContextCompat.getDrawable(this, R.drawable.broodjegezond) as Drawable)
 
-        val itemTitle = findViewById<TextView>(R.id.itemTitle)
-        val itemDescription = findViewById<TextView>(R.id.itemDescription)
-        val itemImage = findViewById<ImageView>(R.id.itemImage)
-        val itemCost = findViewById<TextView>(R.id.itemCost)
-
-        println(items["item2"]?.get("name"))
-        itemTitle.text = items["item2"]?.get("name").toString()
-        itemDescription.text = items["item2"]?.get("description").toString()
-        itemImage.setImageDrawable(items["item2"]?.get("img") as Drawable)
-        itemCost.text = items["item2"]?.get("cost").toString()
     }
 
     private fun itemCountCode() {

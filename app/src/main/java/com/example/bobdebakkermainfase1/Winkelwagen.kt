@@ -34,6 +34,20 @@ class Winkelwagen : AppCompatActivity() {
             "description" to "Bobje® jungle (Bobjes)",
             "img" to R.drawable.broodjegezond,
             "cost" to "€ 5,95"
+        ),
+        "item3" to mutableMapOf (
+            "id" to 3,
+            "name" to "Nog een broodje",
+            "description" to "Geen descriptie eigelijk",
+            "img" to R.drawable.broodjegezond,
+            "cost" to "€ 109,95"
+        ),
+        "item4" to mutableMapOf (
+            "id" to 4,
+            "name" to "Liam Broodje",
+            "description" to "Liampje® walvis (Liampjes)",
+            "img" to R.drawable.broodjeaap,
+            "cost" to "€ 109,95"
         )
     )
 

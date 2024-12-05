@@ -3,6 +3,7 @@ package com.example.bobdebakkermainfase1
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,26 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         // sets the text to the textview from our itemHolder class
         holder.textView.text = ItemsViewModel.text
         holder.description.text = ItemsViewModel.description
+        holder.cost.text = ItemsViewModel.cost
+
+        // COST LATEN WERKEN!!
+        holder.minBtn.setOnClickListener {
+            changeItemCount(-1, holder)
+        }
+
+        holder.plusBtn.setOnClickListener {
+            changeItemCount(+1, holder)
+        }
+    }
+
+    private fun changeItemCount(count: Int, holder: ViewHolder) {
+        // Set Count
+        val count = holder.count.text.toString().toInt() + count
+
+        // Check range
+        if (count < 1 || count > 50) return
+        // Else go further
+        holder.count.text = count.toString()
     }
 
     // return the number of the items in the list
@@ -42,5 +63,9 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         val imageView: ImageView = itemView.findViewById(R.id.itemImage)
         val textView: TextView = itemView.findViewById(R.id.itemTitle)
         val description: TextView = itemView.findViewById(R.id.itemDescription)
+        val cost: TextView = itemView.findViewById(R.id.itemCost)
+        val minBtn: ImageButton = itemView.findViewById(R.id.minBtn)
+        val plusBtn: ImageButton = itemView.findViewById(R.id.plusBtn)
+        val count: TextView = itemView.findViewById(R.id.itemCount)
     }
 }

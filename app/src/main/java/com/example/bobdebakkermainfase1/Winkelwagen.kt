@@ -27,7 +27,6 @@ class Winkelwagen : AppCompatActivity() {
             "description" to "Bobje® jungle (Bobjes)",
             "img" to R.drawable.broodjekippendij,
             "count" to 1,
-            "base_cost" to "€ 6,50",
             "cost" to "€ 6,50"
         ),
         "item2" to mutableMapOf (
@@ -36,7 +35,6 @@ class Winkelwagen : AppCompatActivity() {
             "description" to "Bobje® jungle (Bobjes)",
             "img" to R.drawable.broodjegezond,
             "count" to 1,
-            "base_cost" to "€ 5,95",
             "cost" to "€ 5,95"
         ),
         "item3" to mutableMapOf (
@@ -45,7 +43,6 @@ class Winkelwagen : AppCompatActivity() {
             "description" to "Geen descriptie eigelijk",
             "img" to R.drawable.broodjegezond,
             "count" to 1,
-            "base_cost" to "€ 8,50",
             "cost" to "€ 8,50"
         ),
         "item4" to mutableMapOf (
@@ -54,7 +51,6 @@ class Winkelwagen : AppCompatActivity() {
             "description" to "Liampje® walvis (Liampjes)",
             "img" to R.drawable.broodjeaap,
             "count" to 1,
-            "base_cost" to "€ 109,95",
             "cost" to "€ 109,95"
         )
     )
@@ -86,7 +82,6 @@ class Winkelwagen : AppCompatActivity() {
                 items["item$i"]?.get("name").toString(),
                 items["item$i"]?.get("description").toString(),
                 items["item$i"]?.get("count").toString().toInt(),
-                items["item$i"]?.get("base_cost").toString(),
                 items["item$i"]?.get("cost").toString()
             ))
         }
@@ -144,21 +139,6 @@ class Winkelwagen : AppCompatActivity() {
         // Else go further
         itemCount.text = count.toString()
 
-        // Set Cost
-        val cost = count * 6.5
 
-        // Setup Cost Display
-        var costString = ""
-        for (token in cost.toString()) {
-            if (token.toString() == ".") {
-                costString += ","
-            } else {
-                costString += token.toString()
-            }
-        }
-        costString = "€ " + costString + "0"
-
-        // Set Cost Display
-        itemCost.text = costString
     }
 }

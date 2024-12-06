@@ -33,7 +33,6 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         holder.description.text = ItemsViewModel.description
         holder.cost.text = ItemsViewModel.cost
 
-        // COST LATEN WERKEN!!
         holder.minBtn.setOnClickListener {
             changeItemCount(-1, holder)
         }
@@ -43,14 +42,60 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         }
     }
 
-    private fun changeItemCount(count: Int, holder: ViewHolder) {
+    private fun changeItemCount(adderCount: Int, holder: ViewHolder) {
         // Set Count
-        val count = holder.count.text.toString().toInt() + count
+        val count = holder.count.text.toString().toInt() + adderCount
 
         // Check range
         if (count < 1 || count > 50) return
         // Else go further
         holder.count.text = count.toString()
+
+        changeItemCost(count, adderCount, holder)
+    }
+
+    private fun changeItemCost(count: Int, adderCount: Int, holder: ViewHolder) {
+        val baseCost = decryptCost(holder.cost.text.toString()) / (count - adderCount)
+        //
+
+        // Setup Cost Display
+
+        // Set Cost Display
+
+    }
+
+    private fun decryptCost(costString: String): Double {
+        var cost: String = ""
+        for (token in costString) {
+            if (token.toString() == "€") {
+                continue
+            } else if (token.toString() == " ") {
+                continue
+            } else if (token.toString() == ",") {
+                cost += "."
+            } else {
+                cost += token.toString()
+            }
+        }
+        return cost.toDouble()
+    }
+    private fun encryptCost(cost: Double): String {
+        var costString = ""
+        var idx = 0;
+        for (token in cost.toString()) {
+            costString += if (token.toString() == ".") {
+                ","
+            } else {
+                token.toString()
+            }
+            idx++
+        }
+        costString = if (idx > 3) {
+            "€ $costString"
+        } else {
+            "€ " + costString + "0"
+        }
+        return costString;
     }
 
     // return the number of the items in the list

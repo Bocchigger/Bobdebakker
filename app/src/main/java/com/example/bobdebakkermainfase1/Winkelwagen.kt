@@ -27,7 +27,7 @@ class Winkelwagen : AppCompatActivity() {
             "description" to "Bobje® jungle (Bobjes)",
             "img" to R.drawable.broodjekippendij,
             "count" to 1,
-            "cost" to "€ 6,50"
+            "cost" to 650
         ),
         "item2" to mutableMapOf (
             "id" to 2,
@@ -35,7 +35,7 @@ class Winkelwagen : AppCompatActivity() {
             "description" to "Bobje® jungle (Bobjes)",
             "img" to R.drawable.broodjegezond,
             "count" to 1,
-            "cost" to "€ 5,95"
+            "cost" to 595
         ),
         "item3" to mutableMapOf (
             "id" to 3,
@@ -43,7 +43,7 @@ class Winkelwagen : AppCompatActivity() {
             "description" to "Geen descriptie eigelijk",
             "img" to R.drawable.broodjegezond,
             "count" to 1,
-            "cost" to "€ 8,50"
+            "cost" to 850
         ),
         "item4" to mutableMapOf (
             "id" to 4,
@@ -51,7 +51,7 @@ class Winkelwagen : AppCompatActivity() {
             "description" to "Liampje® walvis (Liampjes)",
             "img" to R.drawable.broodjeaap,
             "count" to 1,
-            "cost" to "€ 109,95"
+            "cost" to 10995
         )
     )
 
@@ -82,7 +82,7 @@ class Winkelwagen : AppCompatActivity() {
                 items["item$i"]?.get("name").toString(),
                 items["item$i"]?.get("description").toString(),
                 items["item$i"]?.get("count").toString().toInt(),
-                items["item$i"]?.get("cost").toString()
+                items["item$i"]?.get("cost").toString().toInt()
             ))
         }
 

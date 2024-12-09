@@ -31,18 +31,18 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         // sets the text to the textview from our itemHolder class
         holder.textView.text = ItemsViewModel.text
         holder.description.text = ItemsViewModel.description
-        holder.cost.text = ItemsViewModel.cost
+        holder.cost.text = costToDisplay(ItemsViewModel.cost)
 
         holder.minBtn.setOnClickListener {
-            changeItemCount(-1, holder)
+            changeItemCount(-1, holder, ItemsViewModel)
         }
 
         holder.plusBtn.setOnClickListener {
-            changeItemCount(+1, holder)
+            changeItemCount(+1, holder, ItemsViewModel)
         }
     }
 
-    private fun changeItemCount(adderCount: Int, holder: ViewHolder) {
+    private fun changeItemCount(adderCount: Int, holder: ViewHolder, ItemsViewModel: ItemsViewModel) {
         // Set Count
         val count = holder.count.text.toString().toInt() + adderCount
 
@@ -51,51 +51,24 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         // Else go further
         holder.count.text = count.toString()
 
-        changeItemCost(count, adderCount, holder)
+        changeItemCost(count, holder, ItemsViewModel)
     }
 
-    private fun changeItemCost(count: Int, adderCount: Int, holder: ViewHolder) {
-        val baseCost = decryptCost(holder.cost.text.toString()) / (count - adderCount)
-        //
+    private fun changeItemCost(count: Int, holder: ViewHolder, ItemsViewModel: ItemsViewModel) {
+        val newCost = ItemsViewModel.cost * count
 
-        // Setup Cost Display
-
-        // Set Cost Display
-
+        holder.cost.text = newCost.toString()
     }
 
-    private fun decryptCost(costString: String): Double {
-        var cost: String = ""
-        for (token in costString) {
-            if (token.toString() == "€") {
-                continue
-            } else if (token.toString() == " ") {
-                continue
-            } else if (token.toString() == ",") {
-                cost += "."
-            } else {
-                cost += token.toString()
-            }
+    private fun costToDisplay(cost: Int): CharSequence {
+        val tokens = cost.toString().toCharArray()
+        // Verder hiermee!!!!
+        return when (tokens.size) {
+            3 -> "€ " + tokens[0] + "," + tokens[1] + tokens[2]
+            4 -> "4"
+            5 -> "€ " + tokens[0] + tokens[1] + tokens[2] + "," + tokens[3] + tokens[4]
+            else -> "ERR: Size out of range"
         }
-        return cost.toDouble()
-    }
-    private fun encryptCost(cost: Double): String {
-        var costString = ""
-        var idx = 0;
-        for (token in cost.toString()) {
-            costString += if (token.toString() == ".") {
-                ","
-            } else {
-                token.toString()
-            }
-            idx++
-        }
-        costString = if (idx > 3) {
-            "€ $costString"
-        } else {
-            "€ " + costString + "0"
-        }
-        return costString;
     }
 
     // return the number of the items in the list

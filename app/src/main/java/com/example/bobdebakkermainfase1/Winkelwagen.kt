@@ -78,11 +78,13 @@ class Winkelwagen : AppCompatActivity() {
         // the image with the count of view
         for (i in 1..items.count()) {
             data.add(ItemsViewModel(
+                items,
                 items["item$i"]?.get("img").toString().toInt(),
                 items["item$i"]?.get("name").toString(),
                 items["item$i"]?.get("description").toString(),
                 items["item$i"]?.get("count").toString().toInt(),
-                items["item$i"]?.get("cost").toString().toInt()
+                items["item$i"]?.get("cost").toString().toInt(),
+                findViewById(R.id.totalCost)
             ))
         }
 
@@ -91,54 +93,5 @@ class Winkelwagen : AppCompatActivity() {
 
         // Setting the Adapter with the recyclerview
         recyclerview.adapter = adapter
-
-
-
-        //winkelwagenCode()
-
-    }
-
-    fun winkelwagenCode() {
-
-
-        /*items["ItemCount"] = "12"
-
-        val itemCount : Int = items["ItemCount"]!!.toInt()
-        for (i in 1..itemCount) {
-            println(i)
-        }*/
-
-        //itemCountCode()
-
-
-    }
-
-    private fun itemCountCode() {
-        val itemCount = findViewById<TextView>(R.id.itemCount)
-        itemCount.text = "1"
-
-        findViewById<ImageButton>(R.id.plusBtn).setOnClickListener {
-            changeItemCount(+1)
-        }
-
-        findViewById<ImageButton>(R.id.minBtn).setOnClickListener {
-            changeItemCount(-1)
-            println()
-        }
-    }
-    private fun changeItemCount(count: Int) {
-        // Get Id's
-        val itemCount = findViewById<TextView>(R.id.itemCount)
-        val itemCost = findViewById<TextView>(R.id.itemCost)
-
-        // Set Count
-        val count = itemCount.text.toString().toInt() + count
-
-        // Check range
-        if (count < 1 || count > 50) return
-        // Else go further
-        itemCount.text = count.toString()
-
-
     }
 }

@@ -1,3 +1,5 @@
 package com.example.bobdebakkermainfase1
 
-data class ItemsViewModel(val image: Int, val text: String, val description: String, val count: Int, val cost: Int)
+import android.widget.TextView
+
+data class ItemsViewModel(val items: MutableMap<String, MutableMap<String, Any>>, val image: Int, val text: String, val description: String, val count: Int, val cost: Int, var totalCost: TextView)

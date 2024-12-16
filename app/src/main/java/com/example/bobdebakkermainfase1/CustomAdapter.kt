@@ -1,5 +1,6 @@
 package com.example.bobdebakkermainfase1
 
+import android.content.ClipData.Item
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,16 +58,29 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
     private fun changeItemCost(count: Int, holder: ViewHolder, ItemsViewModel: ItemsViewModel) {
         val newCost = ItemsViewModel.cost * count
 
-        holder.cost.text = newCost.toString()
+        holder.cost.text = costToDisplay(newCost)
+
+        var totalCost = 0
+        // Verder hiermee, count veranderd niet dat ff fixen.
+        for (i in 1..ItemsViewModel.items.count()) {
+            val cost = ItemsViewModel.items["item$i"]?.get("cost").toString().toInt() *
+                    ItemsViewModel.items["item$i"]?.get("count").toString().toInt()
+            println(ItemsViewModel.items["item$i"]?.get("count").toString().toInt())
+            totalCost += cost
+        }
+        ItemsViewModel.totalCost.text = costToDisplay(totalCost)
     }
 
     private fun costToDisplay(cost: Int): CharSequence {
         val tokens = cost.toString().toCharArray()
-        // Verder hiermee!!!!
         return when (tokens.size) {
+            0 -> "€ 0,00"
+            1 -> "€ 0,0" + tokens[0]
+            2 -> "€ 0," + tokens[0] + tokens[1]
             3 -> "€ " + tokens[0] + "," + tokens[1] + tokens[2]
-            4 -> "4"
+            4 -> "€ " + tokens[0] + tokens[1] + "," + tokens[2] + tokens[3]
             5 -> "€ " + tokens[0] + tokens[1] + tokens[2] + "," + tokens[3] + tokens[4]
+            6 -> "€ " + tokens[0] + tokens[1] + tokens[2] + tokens[3] + "," + tokens[4] + tokens[5]
             else -> "ERR: Size out of range"
         }
     }

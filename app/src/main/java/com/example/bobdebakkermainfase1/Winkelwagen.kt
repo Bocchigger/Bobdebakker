@@ -1,6 +1,7 @@
 package com.example.bobdebakkermainfase1
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -65,6 +66,28 @@ class Winkelwagen : AppCompatActivity() {
             insets
         }
 
+        /*when (val type = intent.getStringExtra("type")) {
+            "addItem" -> addItem(intent)
+            "removeItem" -> removeItem(intent)
+            else -> error("There's no type called '$type'")
+        }
+
+        when (val type2 = intent.getStringExtra("type2")) {
+            "addItem" -> addItem(intent)
+            "removeItem" -> removeItem(intent)
+            null -> println("Type2 nothing")
+            else -> error("There's no type called '$type2'")
+        }*/
+
+        intent.getSerializableExtra("add")?.let {
+            val add = it as MutableMap<String, MutableMap<String, Any>>
+            addItem(add)
+        }
+
+        refreshRecycler()
+    }
+
+    private fun refreshRecycler() {
         // getting the recyclerview by its id
         val recyclerview = findViewById<RecyclerView>(R.id.itemsList)
 
@@ -79,6 +102,7 @@ class Winkelwagen : AppCompatActivity() {
         for (i in 1..items.count()) {
             data.add(ItemsViewModel(
                 items,
+                i,
                 items["item$i"]?.get("img").toString().toInt(),
                 items["item$i"]?.get("name").toString(),
                 items["item$i"]?.get("description").toString(),
@@ -93,5 +117,61 @@ class Winkelwagen : AppCompatActivity() {
 
         // Setting the Adapter with the recyclerview
         recyclerview.adapter = adapter
+
+        calculateTotalCost()
+    }
+
+    private fun calculateTotalCost() {
+        var totalCost = 0
+        for (i in 1..items.count()) {
+            val cost = items["item$i"]?.get("cost").toString().toInt() *
+                    this.items["item$i"]?.get("count").toString().toInt()
+            totalCost += cost
+        }
+        findViewById<TextView>(R.id.totalCost).text = costToDisplay(totalCost)
+    }
+
+    private fun costToDisplay(cost: Int): CharSequence {
+        val tokens = cost.toString().toCharArray()
+        return when (tokens.size) {
+            0 -> "€ 0,00"
+            1 -> "€ 0,0" + tokens[0]
+            2 -> "€ 0," + tokens[0] + tokens[1]
+            3 -> "€ " + tokens[0] + "," + tokens[1] + tokens[2]
+            4 -> "€ " + tokens[0] + tokens[1] + "," + tokens[2] + tokens[3]
+            5 -> "€ " + tokens[0] + tokens[1] + tokens[2] + "," + tokens[3] + tokens[4]
+            6 -> "€ " + tokens[0] + tokens[1] + tokens[2] + tokens[3] + "," + tokens[4] + tokens[5]
+            7 -> "€ " + tokens[0] + tokens[1] + tokens[2] + tokens[3] + tokens[4] + "," + tokens[5] + tokens[6]
+            else -> "ERR: Size out of range"
+        }
+    }
+
+    private fun addItem(add: MutableMap<String, MutableMap<String, Any>>) {
+        val itemsCount = items.count()
+        for (item in add) {
+            val id = itemsCount + add[item.key]?.get("id").toString().toInt()
+            items["item$id"] = mutableMapOf(
+                "id" to id,
+                "name" to add[item.key]?.get("name").toString(),
+                "description" to add[item.key]?.get("description").toString(),
+                "img" to add[item.key]?.get("img").toString().toInt(),
+                "count" to add[item.key]?.get("count").toString().toInt(),
+                "cost" to add[item.key]?.get("cost").toString().toInt()
+            )
+        }
+    }
+
+    private fun removeItem(intent: Intent) {
+        val id = intent.getIntExtra("remover", 0)
+        if (id == 0) {
+            println("Id is 0")
+        } else {
+            for (key in items.keys) {
+                if (items[key]?.get("id") == id) {
+                    items.remove(key)
+                    break
+                }
+            }
+        }
     }
 }

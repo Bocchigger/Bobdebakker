@@ -19,8 +19,35 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val add = mutableMapOf (
+            "item1" to mutableMapOf (
+                "id" to 1,
+                "name" to "ya",
+                "description" to "yayaya",
+                "img" to R.drawable.broodjeaap,
+                "count" to 1,
+                "cost" to 95
+            ),
+            "item2" to mutableMapOf (
+                "id" to 2,
+                "name" to "yaaa",
+                "description" to "yayayaada",
+                "img" to R.drawable.broodjeaap,
+                "count" to 1,
+                "cost" to 96
+            )
+        )
+
         findViewById<Button>(R.id.winkelwagenBtn).setOnClickListener {
             val intent = Intent(this, Winkelwagen::class.java)
+            /*intent.putExtra("type", "addItem")
+            for (key in newItem.keys) {
+                intent.putExtra(key, newItem[key])
+            }
+            intent.putExtra("type2", "removeItem")
+            intent.putExtra("remover", newItem["id"])*/
+
+            intent.putExtra("add", HashMap(add))
             startActivity(intent)
         }
     }

@@ -50,7 +50,11 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         // Check range
         if (count < 1 || count > 50) return
         // Else go further
+
         holder.count.text = count.toString()
+
+        val id = ItemsViewModel.id
+        ItemsViewModel.items["item$id"]?.set("count", count)
 
         changeItemCost(count, holder, ItemsViewModel)
     }
@@ -61,11 +65,9 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         holder.cost.text = costToDisplay(newCost)
 
         var totalCost = 0
-        // Verder hiermee, count veranderd niet dat ff fixen.
         for (i in 1..ItemsViewModel.items.count()) {
             val cost = ItemsViewModel.items["item$i"]?.get("cost").toString().toInt() *
                     ItemsViewModel.items["item$i"]?.get("count").toString().toInt()
-            println(ItemsViewModel.items["item$i"]?.get("count").toString().toInt())
             totalCost += cost
         }
         ItemsViewModel.totalCost.text = costToDisplay(totalCost)
@@ -81,6 +83,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
             4 -> "€ " + tokens[0] + tokens[1] + "," + tokens[2] + tokens[3]
             5 -> "€ " + tokens[0] + tokens[1] + tokens[2] + "," + tokens[3] + tokens[4]
             6 -> "€ " + tokens[0] + tokens[1] + tokens[2] + tokens[3] + "," + tokens[4] + tokens[5]
+            7 -> "€ " + tokens[0] + tokens[1] + tokens[2] + tokens[3] + tokens[4] + "," + tokens[5] + tokens[6]
             else -> "ERR: Size out of range"
         }
     }

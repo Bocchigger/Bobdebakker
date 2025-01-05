@@ -22,14 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class Winkelwagen : AppCompatActivity() {
     private var items : MutableMap<String, MutableMap<String, Any>> = mutableMapOf(
-        "item1" to mutableMapOf (
-            "id" to 1,
-            "name" to "ik wil kaas",
-            "description" to "kassshhh",
-            "img" to R.drawable.broodjekippendij,
-            "count" to 1,
-            "cost" to 199
-        )
+        // Starting empty
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,19 +34,6 @@ class Winkelwagen : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        /*when (val type = intent.getStringExtra("type")) {
-            "addItem" -> addItem(intent)
-            "removeItem" -> removeItem(intent)
-            else -> error("There's no type called '$type'")
-        }
-
-        when (val type2 = intent.getStringExtra("type2")) {
-            "addItem" -> addItem(intent)
-            "removeItem" -> removeItem(intent)
-            null -> println("Type2 nothing")
-            else -> error("There's no type called '$type2'")
-        }*/
 
         intent.getSerializableExtra("add")?.let {
             val add = it as MutableMap<String, MutableMap<String, Any>>

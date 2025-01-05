@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             "additem3"
         )
 
-        findViewById<Button>(R.id.winkelwagenBtn).setOnClickListener {
+        findViewById<Button>(R.id.Bigwinkelwagenbutton).setOnClickListener {
             val intent = Intent(this, Winkelwagen::class.java)
 
             intent.putExtra("add", HashMap(add))

@@ -35,19 +35,35 @@ class MainActivity : AppCompatActivity() {
                 "img" to R.drawable.broodjeaap,
                 "count" to 1,
                 "cost" to 96
+            ),
+            "item3" to mutableMapOf (
+                "id" to 3,
+                "name" to "ahh",
+                "description" to "ahhhhh",
+                "img" to R.drawable.broodjeaap,
+                "count" to 1,
+                "cost" to 97
+            ),
+            "item4" to mutableMapOf (
+                "id" to 4,
+                "name" to "ikki",
+                "description" to "ikikik",
+                "img" to R.drawable.broodjegezond,
+                "count" to 1,
+                "cost" to 98
             )
+        )
+
+        val remove = arrayOf(
+            "item1",
+            "additem3"
         )
 
         findViewById<Button>(R.id.winkelwagenBtn).setOnClickListener {
             val intent = Intent(this, Winkelwagen::class.java)
-            /*intent.putExtra("type", "addItem")
-            for (key in newItem.keys) {
-                intent.putExtra(key, newItem[key])
-            }
-            intent.putExtra("type2", "removeItem")
-            intent.putExtra("remover", newItem["id"])*/
 
             intent.putExtra("add", HashMap(add))
+            intent.putExtra("remove", remove)
             startActivity(intent)
         }
     }

@@ -24,35 +24,11 @@ class Winkelwagen : AppCompatActivity() {
     private var items : MutableMap<String, MutableMap<String, Any>> = mutableMapOf(
         "item1" to mutableMapOf (
             "id" to 1,
-            "name" to "Broodje Kippendij",
-            "description" to "Bobje® jungle (Bobjes)",
+            "name" to "ik wil kaas",
+            "description" to "kassshhh",
             "img" to R.drawable.broodjekippendij,
             "count" to 1,
-            "cost" to 650
-        ),
-        "item2" to mutableMapOf (
-            "id" to 2,
-            "name" to "Broodjeeeeee Gezondo",
-            "description" to "Bobje® jungle (Bobjes)",
-            "img" to R.drawable.broodjegezond,
-            "count" to 1,
-            "cost" to 595
-        ),
-        "item3" to mutableMapOf (
-            "id" to 3,
-            "name" to "Nog een broodje",
-            "description" to "Geen descriptie eigelijk",
-            "img" to R.drawable.broodjegezond,
-            "count" to 1,
-            "cost" to 850
-        ),
-        "item4" to mutableMapOf (
-            "id" to 4,
-            "name" to "Liam Broodje",
-            "description" to "Liampje® walvis (Liampjes)",
-            "img" to R.drawable.broodjeaap,
-            "count" to 1,
-            "cost" to 10995
+            "cost" to 199
         )
     )
 
@@ -83,6 +59,8 @@ class Winkelwagen : AppCompatActivity() {
             val add = it as MutableMap<String, MutableMap<String, Any>>
             addItem(add)
         }
+
+        removeItem(intent.getStringArrayExtra("remove")!!)
 
         refreshRecycler()
     }
@@ -122,13 +100,22 @@ class Winkelwagen : AppCompatActivity() {
     }
 
     private fun calculateTotalCost() {
+        val totalCostTxt = findViewById<TextView>(R.id.totalCost)
+        val isEmptyTxt = findViewById<TextView>(R.id.nothingHere)
+        if (items.isEmpty()) {
+            isEmptyTxt.text = "Je winkewagen is leeg..."
+            totalCostTxt.text = "-"
+            return
+        }
+        isEmptyTxt.text = ""
+
         var totalCost = 0
         for (i in 1..items.count()) {
             val cost = items["item$i"]?.get("cost").toString().toInt() *
                     this.items["item$i"]?.get("count").toString().toInt()
             totalCost += cost
         }
-        findViewById<TextView>(R.id.totalCost).text = costToDisplay(totalCost)
+        totalCostTxt.text = costToDisplay(totalCost)
     }
 
     private fun costToDisplay(cost: Int): CharSequence {
@@ -161,17 +148,37 @@ class Winkelwagen : AppCompatActivity() {
         }
     }
 
-    private fun removeItem(intent: Intent) {
-        val id = intent.getIntExtra("remover", 0)
-        if (id == 0) {
-            println("Id is 0")
-        } else {
-            for (key in items.keys) {
-                if (items[key]?.get("id") == id) {
-                    items.remove(key)
-                    break
+    private fun removeItem(removes: Array<String>) {
+        for (item in removes) {
+            if (item.removeRange(3, item.toString().length) == "add") {
+                intent.getSerializableExtra("add")?.let {
+                    val add = it as MutableMap<String, MutableMap<String, Any>>
+                    for (key in items.keys) {
+                        val adder = item.removeRange(0, 3)
+                        if (items[key]?.get("name") == add[adder]?.get("name") &&
+                            items[key]?.get("description") == add[adder]?.get("description") &&
+                            items[key]?.get("cost") == add[adder]?.get("cost")) {
+                            items.remove(key)
+                        }
+                    }
                 }
+            } else {
+                items.remove(item)
             }
+        }
+        if (items.isEmpty()) {
+            return
+        }
+        val keys = mutableSetOf<String>()
+        for (key in items.keys) {
+            keys.add(key)
+        }
+        var id = 1
+        for (key in keys) {
+            val newKey = "item$id"
+            items[newKey] = items.remove(key)!!
+            items[newKey]?.set("id", id)
+            id++
         }
     }
 }

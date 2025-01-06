@@ -3,6 +3,7 @@ package com.example.bobdebakkermainfase1
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val add = mutableMapOf (
+        val add: MutableMap<String, MutableMap<String, Any>> = mutableMapOf (
             /* Example:
 
             "item1" to mutableMapOf (
@@ -46,6 +47,46 @@ class MainActivity : AppCompatActivity() {
             */
             "" // Add empty string to remove nothing. This is to avoid any bugs
         )
+
+        var carpaccioCount = 0
+
+        findViewById<ImageButton>(R.id.carpaccio).setOnClickListener {
+            carpaccioCount++
+            var id = add.count() + 1
+            if (add[""]?.get("") == "") {
+                add.remove("")
+                id = 1
+            }
+            val key = "item$id"
+            add[key] = mutableMapOf (
+                "id" to id,
+                "name" to "Broodje Carpaccio",
+                "description" to "Bobje© Vitaal",
+                "img" to R.drawable.broodjecarpaccio,
+                "count" to carpaccioCount,
+                "cost" to 725
+            )
+        }
+
+        var gezondCount = 0
+
+        findViewById<ImageButton>(R.id.heelgezondtrust).setOnClickListener {
+            gezondCount++
+            var id = add.count() + 1
+            if (add[""]?.get("") == "") {
+                add.remove("")
+                id = 1
+            }
+            val key = "item$id"
+            add[key] = mutableMapOf (
+                "id" to id,
+                "name" to "Broodje Gezond",
+                "description" to "Bobje© Jungle",
+                "img" to R.drawable.broodjegezond,
+                "count" to gezondCount,
+                "cost" to 595
+            )
+        }
 
         findViewById<Button>(R.id.winkelwagenButton).setOnClickListener {
             val intent = Intent(this, Winkelwagen::class.java)

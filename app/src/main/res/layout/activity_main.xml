@@ -124,29 +124,31 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Shoppen"
-        android:layout_width="412dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Subheader" >
+        app:layout_constraintTop_toBottomOf="@+id/Subheader">
 
-        <ImageView
-            android:id="@+id/carpaccio"
+        <ImageButton
+            android:id="@+id/heelgezondtrust"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kippendij"
-            app:srcCompat="@drawable/broodjecarpaccioding" />
-
-        <ImageView
-            android:id="@+id/kippendij"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/broodjekippendijding" />
+            app:srcCompat="@drawable/broodjegezondding" />
+
+        <ImageButton
+            android:id="@+id/carpaccio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/heelgezondtrust"
+            app:srcCompat="@drawable/broodjecarpaccioding" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

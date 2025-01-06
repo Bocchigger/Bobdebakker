@@ -8,6 +8,16 @@
     android:background="#FFFFFF"
     tools:context=".Winkelwagen">
 
+    <ImageView
+        android:id="@+id/exitWinkelwagen"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/x" />
+
     <TextView
         android:id="@+id/titleWinkelwagen"
         android:layout_width="wrap_content"
@@ -20,7 +30,8 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <View
         android:id="@+id/dividerTitleSelect"
@@ -65,7 +76,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/winkelIcon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/pointerArrowIcon"
@@ -73,9 +85,11 @@
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
+            android:contentDescription="Pointer Arrow Icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/arrow" />
+            app:srcCompat="@drawable/arrow"
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,13 +121,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/bree_serif"
-        android:text="Je winkewagen is leeg..."
+        android:text="Je winkelwagen is leeg..."
         android:textColor="#A0A0A0"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dividerSelectItems" />
+        app:layout_constraintTop_toBottomOf="@+id/dividerSelectItems"
+        tools:ignore="HardcodedText" />
 
     <View
         android:id="@+id/dividerItemsFooter"

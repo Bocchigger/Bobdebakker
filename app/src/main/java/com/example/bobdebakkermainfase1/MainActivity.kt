@@ -20,46 +20,34 @@ class MainActivity : AppCompatActivity() {
         }
 
         val add = mutableMapOf (
+            /* Example:
+
             "item1" to mutableMapOf (
                 "id" to 1,
-                "name" to "ya",
-                "description" to "yayaya",
+                "name" to "Name",
+                "description" to "Description",
                 "img" to R.drawable.broodjeaap,
                 "count" to 1,
-                "cost" to 95
-            ),
-            "item2" to mutableMapOf (
-                "id" to 2,
-                "name" to "yaaa",
-                "description" to "yayayaada",
-                "img" to R.drawable.broodjeaap,
-                "count" to 1,
-                "cost" to 96
-            ),
-            "item3" to mutableMapOf (
-                "id" to 3,
-                "name" to "ahh",
-                "description" to "ahhhhh",
-                "img" to R.drawable.broodjeaap,
-                "count" to 1,
-                "cost" to 97
-            ),
-            "item4" to mutableMapOf (
-                "id" to 4,
-                "name" to "ikki",
-                "description" to "ikikik",
-                "img" to R.drawable.broodjegezond,
-                "count" to 1,
-                "cost" to 98
+                "cost" to 0
             )
+
+            */
+            "" to mutableMapOf (
+                "" to ""
+            ) // Add empty key and string to add nothing. This is to avoid any bugs
         )
 
         val remove = arrayOf(
-            "item1",
-            "additem3"
+            /* Example:
+
+            "item1", -- This if you want to delete the normal way
+            "additem3" -- This if you want to delete out of the add-map
+
+            */
+            "" // Add empty string to remove nothing. This is to avoid any bugs
         )
 
-        findViewById<Button>(R.id.Bigwinkelwagenbutton).setOnClickListener {
+        findViewById<Button>(R.id.winkelwagenButton).setOnClickListener {
             val intent = Intent(this, Winkelwagen::class.java)
 
             intent.putExtra("add", HashMap(add))

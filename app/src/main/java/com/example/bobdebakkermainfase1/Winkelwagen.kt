@@ -1,20 +1,12 @@
 package com.example.bobdebakkermainfase1
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,12 +29,22 @@ class Winkelwagen : AppCompatActivity() {
 
         intent.getSerializableExtra("add")?.let {
             val add = it as MutableMap<String, MutableMap<String, Any>>
-            addItem(add)
+            if (add[""]?.get("") != "") {
+                addItem(add)
+            }
         }
 
-        removeItem(intent.getStringArrayExtra("remove")!!)
+        val remove = intent.getStringArrayExtra("remove")
+        if (remove?.get(0) != "") {
+            removeItem(remove!!)
+        }
 
         refreshRecycler()
+
+        findViewById<ImageButton>(R.id.exitWinkelwagen).setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun refreshRecycler() {
@@ -79,11 +81,12 @@ class Winkelwagen : AppCompatActivity() {
         calculateTotalCost()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun calculateTotalCost() {
         val totalCostTxt = findViewById<TextView>(R.id.totalCost)
         val isEmptyTxt = findViewById<TextView>(R.id.nothingHere)
         if (items.isEmpty()) {
-            isEmptyTxt.text = "Je winkewagen is leeg..."
+            isEmptyTxt.text = "Je winkelwagen is leeg..."
             totalCostTxt.text = "-"
             return
         }
@@ -130,7 +133,7 @@ class Winkelwagen : AppCompatActivity() {
 
     private fun removeItem(removes: Array<String>) {
         for (item in removes) {
-            if (item.removeRange(3, item.toString().length) == "add") {
+            if (item.removeRange(3, item.length) == "add") {
                 intent.getSerializableExtra("add")?.let {
                     val add = it as MutableMap<String, MutableMap<String, Any>>
                     for (key in items.keys) {

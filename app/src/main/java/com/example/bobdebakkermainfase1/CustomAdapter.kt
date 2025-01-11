@@ -32,7 +32,8 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         // sets the text to the textview from our itemHolder class
         holder.textView.text = ItemsViewModel.text
         holder.description.text = ItemsViewModel.description
-        holder.cost.text = costToDisplay(ItemsViewModel.cost)
+        holder.cost.text = costToDisplay(ItemsViewModel.cost * ItemsViewModel.count)
+        holder.count.text = ItemsViewModel.count.toString()
 
         holder.minBtn.setOnClickListener {
             changeItemCount(-1, holder, ItemsViewModel)
@@ -45,7 +46,9 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
 
     private fun changeItemCount(adderCount: Int, holder: ViewHolder, ItemsViewModel: ItemsViewModel) {
         // Set Count
-        val count = holder.count.text.toString().toInt() + adderCount
+        val id = ItemsViewModel.id
+        val item = ItemsViewModel.items["item$id"]
+        val count = item?.get("count").toString().toInt() + adderCount
 
         // Check range
         if (count < 1 || count > 50) return
@@ -53,9 +56,9 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
 
         holder.count.text = count.toString()
 
-        val id = ItemsViewModel.id
-        ItemsViewModel.items["item$id"]?.set("count", count)
 
+        item?.set("count", count)
+        println(ItemsViewModel)
         changeItemCost(count, holder, ItemsViewModel)
     }
 

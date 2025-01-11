@@ -27,6 +27,15 @@ class Winkelwagen : AppCompatActivity() {
             insets
         }
 
+        intent.getSerializableExtra("winkelwagen")?.let {
+            val newItems = it as? MutableMap<String, MutableMap<String, Any>>
+            if (newItems == null) {
+                return
+            }
+
+            items = newItems
+        }
+
         intent.getSerializableExtra("add")?.let {
             val add = it as MutableMap<String, MutableMap<String, Any>>
             if (add[""]?.get("") != "") {
@@ -43,6 +52,7 @@ class Winkelwagen : AppCompatActivity() {
 
         findViewById<ImageButton>(R.id.exitWinkelwagen).setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("winkelwagen", HashMap(items))
             startActivity(intent)
         }
     }
@@ -72,11 +82,9 @@ class Winkelwagen : AppCompatActivity() {
             ))
         }
 
-        // This will pass the ArrayList to our Adapter
-        val adapter = CustomAdapter(data)
+        val adapter = CustomAdapter(data) // Create an custom adapter (class) with our data
 
-        // Setting the Adapter with the recyclerview
-        recyclerview.adapter = adapter
+        recyclerview.adapter = adapter // Setting the recyclerview adapter to our custom adapter
 
         calculateTotalCost()
     }
